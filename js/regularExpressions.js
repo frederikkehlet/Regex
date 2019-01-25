@@ -1,5 +1,5 @@
 // regular expression used for emails
-var regex_email = /^[A-z0-9._-]{1,50}@[a-z]+\.[a-z]{2,}(\.[a-z]{2})?$/;
+var regex_email = /^[A-z0-9._-]{1,50}@[a-z0-9]+\.[a-z]{2,}(\.[a-z]{2})?$/;
 
 // regular expression for first and last names
 var regex_name = /^[A-ZÆØÅ\']{1}([a-zæøå -\']+)?$/;

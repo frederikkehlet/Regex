@@ -12,17 +12,16 @@ $(document).ready(function() {
          if (xhr.status === 200) {
             console.log(xhr.status + ": " + textStatus);
          } else {
-            $('.countries').append("<option value=''>Could not load countries</option>");
+            $('.cities').append("<option value=''>Could not load cities</option>");
             console.error(xhr.status + ": " + textStatus);
          }
       }
    });
 
-var city;
+   var city;
    $('.cities').change(function() {
       checkPostalCode();
       city = $('.cities option:selected').text();
-      console.log(city);
       $.get('cities/codes_and_cities.json', function(data) {
          $('.postal-code-input').attr("value","");
          $.each(data, function(index,value) {
@@ -40,7 +39,7 @@ var city;
          SetDefaultStyles('.postal-code-input');
          checkIfAllInputsAreValidated();
       } else {
-         if (regex_postal_code.test($('.postal-code-input').val()) === true) {
+         if (regex_postal_code.test($('.postal-code-input').val())) {
             SetValidatedStyles('.postal-code-input');
             checkIfAllInputsAreValidated();
          } else {
@@ -60,7 +59,7 @@ var city;
          RemoveErrorMessage('.email-error');
          checkIfAllInputsAreValidated();
       } else {
-         if (regex_email.test($(this).val()) === true) {
+         if (regex_email.test($(this).val())) {
             // db lookup
             $.ajax({
                url: './database.php',
@@ -68,7 +67,6 @@ var city;
                data: { email: $(this).val() },
                success: function(data) {
                   if (data) {
-                     console.log(data);
                      SetErrorMessage('.email-error','Email already exists');
                      SetErrorStyles('#email-input');
                   } else {
@@ -106,7 +104,7 @@ var city;
          SetDefaultStyles($(this));
          checkIfAllInputsAreValidated();
       } else {
-         if (regex_street_name.test($(this).val()) === true) {
+         if (regex_street_name.test($(this).val())) {
             SetValidatedStyles($(this));
             checkIfAllInputsAreValidated();
          } else {
@@ -120,7 +118,7 @@ var city;
       if (InputIsEmpty($(this).val())) {
          SetDefaultStyles($(this));
       } else {
-         if (regex_phone_number.test($(this).val()) === true) {
+         if (regex_phone_number.test($(this).val())) {
             $(this).css("border","1px solid green")
             .css("color","green");
          } else {
@@ -131,20 +129,15 @@ var city;
    });
 
    function checkIfAllInputsAreValidated() {
-      if ($("#first-name").hasClass("validated")
-         && $("#last-name").hasClass("validated")
-         && city != ""
-         && $(".postal-code-input").hasClass("validated")
-         && $('.street-name-input').hasClass("validated")
-         && $("#email-input").hasClass("validated")) {
-               $('#index-submit').attr("disabled",false);
-      } else {
-         $('#index-submit').attr("disabled",true);
-      }
+      $('#index-submit').attr("disabled",true);
+      if (AllInputAreValid()) $('#index-submit').attr("disabled",false);
    }
 
-    $("#index-submit").click(function(e) {
+   $("#index-submit").click(function(e) {
       e.preventDefault();
+      // ajax call to validate input
+      // TODO HERE
+      // if validation is ok
       $("#index-form").animate({right:"5%"},250).animate({left:"95%"},500, function() {
          $(this).hide();
          $(".upload-succesful").html("Upload succesful").fadeIn(1000);
