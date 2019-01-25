@@ -1,0 +1,99 @@
+* {
+   font-family: "Verdana";
+   color: black;
+   box-sizing: border-box;
+   font-size: 13px;
+}
+
+#index-form {
+   overflow-x: hidden;
+   position: relative;
+   border: 1px solid rgb(0,0,0, .15);
+   border-radius: 5px;
+   width: 65%;
+   margin: 25px auto;
+   padding: 25px 25px;
+   box-shadow: 0 0 15px rgb(0,0,0, .15);
+}
+
+.email-error {
+   color: red;
+}
+
+.upload-succesful {
+   padding: 25px 0;
+   width: 200px;
+   display:none;
+   margin: 25% auto;
+   text-align: center;
+   font-size: 18px;
+   border: 1px solid rgb(0,0,0, .15);
+   box-shadow: 0 0 15px rgb(0,0,0, .15);
+   border-radius: 5px;
+}
+
+#index-submit {
+   padding: 10px 25px;
+}
+
+.input-section-title {
+   font-weight: bold;
+   font-size: 18px;
+   color: rgb(23, 98, 161);
+}
+
+.form-control:focus {
+   border: 1px solid rgba(0,0,0, .15);
+   box-shadow: 0 0px 8px 0 rgba(0,0,0, .15);
+}
+
+.btn-primary {
+   border-color: rgb(23, 98, 161);
+   background-color: rgb(23, 98, 161);
+}
+
+.container-name, .container-information {
+   display: grid;
+   grid-gap: 10px;
+   grid-template-columns: 1fr 1fr;
+   margin-bottom: 25px;
+}
+.container-location {
+   display: grid;
+   grid-gap: 10px;
+   grid-template-columns: 1fr 1fr 2fr;
+   margin-bottom: 25px;
+}
+.container-submit {
+   display: grid;
+   grid-gap: 10px;
+   grid-template-columns: 2fr 1fr;
+}
+
+.input-required {
+   font-size: 12px;
+   font-weight: bold;
+   color: red;
+}
+
+/* media queries */
+   @media only screen and (max-width: 950px) {
+   .container-location {
+      grid-template-columns: 1fr 1fr;
+   }
+   .container-submit {
+      grid-template-columns: 1fr 1fr;
+   }
+}
+
+@media only screen and (max-width: 800px) {
+   #index-form {
+      width: 70%;
+   }
+   .container-name, .container-information,.container-location, .container-submit {
+      grid-template-columns: 1fr;
+   }
+   .container-submit {
+      margin-bottom: 25px;
+   }
+}
