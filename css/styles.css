@@ -58,12 +58,14 @@
    grid-template-columns: 1fr 1fr;
    margin-bottom: 25px;
 }
+
 .container-location {
    display: grid;
    grid-gap: 10px;
    grid-template-columns: 1fr 1fr 2fr;
    margin-bottom: 25px;
 }
+
 .container-submit {
    display: grid;
    grid-gap: 10px;
@@ -81,6 +83,7 @@
    .container-location {
       grid-template-columns: 1fr 1fr;
    }
+
    .container-submit {
       grid-template-columns: 1fr 1fr;
    }
@@ -90,9 +93,14 @@
    #index-form {
       width: 70%;
    }
-   .container-name, .container-information,.container-location, .container-submit {
+
+   .container-name,
+   .container-information,
+   .container-location,
+   .container-submit {
       grid-template-columns: 1fr;
    }
+
    .container-submit {
       margin-bottom: 25px;
    }

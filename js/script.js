@@ -17,14 +17,12 @@ $(document).ready(function() {
    // regular expression for numbers
    var regex_phone_number = /^[0-9]{8}$/;
 
-   $.ajax({
-      url: 'cities/cities.json',
+   $.get({
+      url: './cities/cities.json',
       dataType: 'json',
-      method: 'get',
-      cache: false,
       success: function(data) {
          $.each(data, function(index, value) {
-            $('.cities').append("<option value='"+ data[index]['name'] +"'>"
+            $('.cities').append("<option class='city' value='"+ data[index]['name'] +"'>"
             + data[index]['name'] +"</option>");
          })
       },
@@ -39,10 +37,13 @@ $(document).ready(function() {
    });
 
    var city;
-   $('.cities').on('click', $(this), function() {
+   $('.cities').change(function() {
       checkPostalCode();
-      city = $('.cities').find(":selected").text();
+      city = $('.cities option:selected').text();
+      console.log(city);
       $.get('cities/codes_and_cities.json', function(data) {
+         // parse the data
+         data = JSON.parse(data);
          $('.postal-code-input').attr("value","");
          $.each(data, function(index,value) {
             if (city === data[index]['name']) {
@@ -51,7 +52,7 @@ $(document).ready(function() {
             }
          });
          checkPostalCode();
-      })
+      });
    });
 
    function checkPostalCode() {
@@ -173,10 +174,13 @@ $(document).ready(function() {
    });
 
    function checkAllValidated() {
-      if ($("#first-name").hasClass("validated") && $("#last-name").hasClass("validated")
-      && city != "" && $(".postal-code-input").hasClass("validated")
-      && $('.street-name-input').hasClass("validated") && $("#email-input").hasClass("validated")) {
-         $('#index-submit').attr("disabled",false);
+      if ($("#first-name").hasClass("validated")
+         && $("#last-name").hasClass("validated")
+         && city != ""
+         && $(".postal-code-input").hasClass("validated")
+         && $('.street-name-input').hasClass("validated")
+         && $("#email-input").hasClass("validated")) {
+               $('#index-submit').attr("disabled",false);
       } else {
          $('#index-submit').attr("disabled",true);
       }

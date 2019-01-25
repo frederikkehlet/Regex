@@ -31,7 +31,7 @@
       <div class="container-location">
          <div class="form-group city-select-field">
             <label for="city">City<span class="input-required">*</span></label>
-            <select class="form-control cities" name="countries" required>
+            <select class="form-control cities" name="cities" required>
                <option value="#">Select a city...</option>
             </select>
          </div>
@@ -51,8 +51,7 @@
       <div class="container-information">
          <div class="form-group email-field" style="position:relative;">
             <label for="email">Email<span class="input-required">*</span></label>
-            <input  class="form-control" id="email-input" type="email" name="email" 
-            pattern="^[A-z0-9._-]{1,50}@[a-z]+\.[a-z]{2,}\.?([a-z]{2})?" required>
+            <input  class="form-control" id="email-input" type="email" name="email" pattern="[A-z0-9._-]{1,50}@[a-z]+\.[a-z]{2,}\.?([a-z]{2})?" required>
             <span class="email-error" style="position:absolute;top:60px;"></span>
          </div>
          <div class="form-group phone-field">
