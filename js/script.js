@@ -24,7 +24,6 @@ var city;
       city = $('.cities option:selected').text();
       console.log(city);
       $.get('cities/codes_and_cities.json', function(data) {
-         data = JSON.parse(data);
          $('.postal-code-input').attr("value","");
          $.each(data, function(index,value) {
             if (city === data[index]['name']) {
@@ -68,8 +67,8 @@ var city;
                method: 'post',
                data: { email: $(this).val() },
                success: function(data) {
-                  console.log(data);
-                  if (data === '1') {
+                  if (data) {
+                     console.log(data);
                      SetErrorMessage('.email-error','Email already exists');
                      SetErrorStyles('#email-input');
                   } else {
