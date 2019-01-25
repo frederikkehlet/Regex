@@ -15,11 +15,13 @@
       <div class="container-name">
          <div class="form-group first-name-field">
             <label for="first-name">First name<span class="input-required">*</span></label>
-            <input class="form-control name-input" id="first-name" type="text" name="first-name" required>
+            <input class="form-control name-input" id="first-name" type="text"
+            name="first-name" required>
          </div>
          <div class="form-group last-name-field">
             <label for="last-name">Last name<span class="input-required">*</span></label>
-            <input class="form-control name-input" id="last-name" type="text" name="last-name" required>
+            <input class="form-control name-input" id="last-name" type="text"
+            name="last-name" required>
          </div>
       </div>
 
@@ -49,7 +51,8 @@
       <div class="container-information">
          <div class="form-group email-field" style="position:relative;">
             <label for="email">Email<span class="input-required">*</span></label>
-            <input  class="form-control" id="email-input" type="email" name="email" pattern="[A-z0-9._-]{1,50}@[a-z]+\.[a-z]{2,}\.?([a-z]{2})?" required>
+            <input  class="form-control" id="email-input" type="email" name="email" 
+            pattern="^[A-z0-9._-]{1,50}@[a-z]+\.[a-z]{2,}\.?([a-z]{2})?" required>
             <span class="email-error" style="position:absolute;top:60px;"></span>
          </div>
          <div class="form-group phone-field">
