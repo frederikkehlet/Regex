@@ -1,28 +1,10 @@
 $(document).ready(function() {
-   // regular expression used for emails
-   var regex_email = /^[A-z0-9._-]{1,50}@[a-z]+\.[a-z]{2,}(\.[a-z]{2})?$/;
-
-   // regular expression for first and last names
-   var regex_name = /^[A-ZÆØÅ\']{1}([a-zæøå -\']+)?$/;
-
-   // regular expression for country codes
-   var regex_country_code = /^[A-Z]{2}$/;
-
-   // regular expression for postal codes
-   var regex_postal_code = /^[0-9]{4}$/;
-
-   // regular expression for street names
-   var regex_street_name = /[A-z\.\' -ÆØÅæøå]{1,}[0-9]{1,}/;
-
-   // regular expression for numbers
-   var regex_phone_number = /^[0-9]{8}$/;
-
    $.get({
       url: './cities/cities.json',
       dataType: 'json',
       success: function(data) {
          $.each(data, function(index, value) {
-            $('.cities').append("<option class='city' value='"+ data[index]['name'] +"'>"
+            $('.cities').append("<option value='"+ data[index]['name'] +"'>"
             + data[index]['name'] +"</option>");
          })
       },
@@ -36,13 +18,12 @@ $(document).ready(function() {
       }
    });
 
-   var city;
+var city;
    $('.cities').change(function() {
       checkPostalCode();
       city = $('.cities option:selected').text();
       console.log(city);
       $.get('cities/codes_and_cities.json', function(data) {
-         // parse the data
          data = JSON.parse(data);
          $('.postal-code-input').attr("value","");
          $.each(data, function(index,value) {
@@ -56,21 +37,16 @@ $(document).ready(function() {
    });
 
    function checkPostalCode() {
-      if ($('.postal-code-input').val() == "#") {
-         $('.postal-code-input').css("border","1px solid rgba(0,0,0, .15)");
-         $('.postal-code-input').removeClass("validated");
-         checkAllValidated();
+      if (InputIsEmpty($('.postal-code-input').val())) {
+         SetDefaultStyles('.postal-code-input');
+         checkIfAllInputsAreValidated();
       } else {
          if (regex_postal_code.test($('.postal-code-input').val()) === true) {
-            $('.postal-code-input').css("border","1px solid green")
-            .css("color","green");
-            $('.postal-code-input').addClass("validated");
-            checkAllValidated();
+            SetValidatedStyles('.postal-code-input');
+            checkIfAllInputsAreValidated();
          } else {
-            $('.postal-code-input').css("border","1px solid rgba(0,0,0, .15)")
-            .css("color","black");
-            $('.postal-code-input').removeClass("validated");
-            checkAllValidated();
+            SetDefaultStyles('.postal-code-input');
+            checkIfAllInputsAreValidated();
          }
       }
    };
@@ -80,88 +56,70 @@ $(document).ready(function() {
    });
 
    $("#email-input").keyup(function() {
-      if ($(this).val() == "") {
-         $(this).css("border","1px solid rgba(0,0,0, .15)");
-         $('.email-error').html("");
-         $(this).removeClass("validated");
-         checkAllValidated();
+      if (InputIsEmpty($(this).val())) {
+         SetDefaultStyles($(this));
+         RemoveErrorMessage('.email-error');
+         checkIfAllInputsAreValidated();
       } else {
          if (regex_email.test($(this).val()) === true) {
-            $(this).css("border","1px solid green")
-            .css("color","green");
             // db lookup
             $.ajax({
                url: './database.php',
                method: 'post',
-               data: {
-                  email: $(this).val()
-               },
+               data: { email: $(this).val() },
                success: function(data) {
                   console.log(data);
                   if (data === '1') {
-                     $('#email-input').css("color","red").css("border","1px solid red");
-                     $('.email-error').html("Email already exists");
+                     SetErrorMessage('.email-error','Email already exists');
+                     SetErrorStyles('#email-input');
                   } else {
-                     $('.email-error').html(" ");
-                     $('#email-input').addClass("validated");
-                     checkAllValidated();
+                     SetValidatedStyles($("#email-input"));
+                     RemoveErrorMessage('.email-error');
+                     checkIfAllInputsAreValidated();
                   }
                }
             });
          } else {
-            $(this).css("border","1px solid rgba(0,0,0, .15)")
-            .css("color","black");
-            $('.email-error').html("");
-            $("#email-input").removeClass("validated");
-            checkAllValidated();
+            SetDefaultStyles($(this));
+            RemoveErrorMessage('.email-error');
+            checkIfAllInputsAreValidated();
          }
       }
    });
 
    $("#first-name, #last-name").keyup(function() {
-      if ($(this).val() == "") {
-         $(this).css("border","1px solid rgba(0,0,0, .15)");
-         $(this).removeClass("validated");
-         checkAllValidated();
+      if (InputIsEmpty($(this).val())) {
+         SetDefaultStyles($(this));
+         checkIfAllInputsAreValidated();
       } else {
          if (regex_name.test($(this).val()) === true) {
-            $(this).css("border","1px solid green")
-            .css("color","green");
-            $(this).addClass("validated");
-            checkAllValidated();
+            SetValidatedStyles($(this));
+            checkIfAllInputsAreValidated();
          } else {
-            $(this).css("border","1px solid rgba(0,0,0, .15)")
-            .css("color","black");
-            $(this).removeClass("validated");
-            checkAllValidated();
+            SetDefaultStyles($(this));
+            checkIfAllInputsAreValidated();
          }
       }
    });
 
    $('.street-name-input').keyup(function() {
-      if ($(this).val() == "") {
-         $(this).css("border","1px solid rgba(0,0,0, .15)");
-         $(this).removeClass("validated");
-         checkAllValidated();
+      if (InputIsEmpty($(this).val())) {
+         SetDefaultStyles($(this));
+         checkIfAllInputsAreValidated();
       } else {
          if (regex_street_name.test($(this).val()) === true) {
-            $(this).css("border","1px solid green")
-            .css("color","green");
-            $(this).addClass("validated");
-            checkAllValidated();
+            SetValidatedStyles($(this));
+            checkIfAllInputsAreValidated();
          } else {
-            $(this).css("border","1px solid rgba(0,0,0, .15)")
-            .css("color","black");
-            $(this).removeClass("validated");
-            checkAllValidated();
+            SetDefaultStyles($(this));
+            checkIfAllInputsAreValidated();
          }
       }
    });
 
    $('.phone-input').keyup(function() {
-      if ($(this).val() == "") {
-         $(this).css("border","1px solid rgba(0,0,0, .15)");
-         $(this).removeClass("validated");
+      if (InputIsEmpty($(this).val())) {
+         SetDefaultStyles($(this));
       } else {
          if (regex_phone_number.test($(this).val()) === true) {
             $(this).css("border","1px solid green")
@@ -173,7 +131,7 @@ $(document).ready(function() {
       }
    });
 
-   function checkAllValidated() {
+   function checkIfAllInputsAreValidated() {
       if ($("#first-name").hasClass("validated")
          && $("#last-name").hasClass("validated")
          && city != ""

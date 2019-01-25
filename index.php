@@ -32,7 +32,7 @@
          <div class="form-group city-select-field">
             <label for="city">City<span class="input-required">*</span></label>
             <select class="form-control cities" name="cities" required>
-               <option value="#">Select a city...</option>
+               <option value="">Select a city...</option>
             </select>
          </div>
          <div class="form-group postal-code-field">
@@ -68,6 +68,8 @@
       <span>Fields marked with <span class="input-required">*</span> are required</span>
    </form>
    <div class="upload-succesful"></div>
+   <script src="js/regularExpressions.js"></script>
+   <script src="js/customFunctions.js"></script>
    <script src="js/script.js"></script>
 </body>
 </html>
