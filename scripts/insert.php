@@ -6,7 +6,7 @@ isset($_POST['postalCode']) && isset($_POST['address']) && isset($_POST['email']
    !empty($_POST['postalCode']) && !empty($_POST['address']) && !empty($_POST['email'])) {
       // validate email
       if (!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)) {
-         exit('607');
+         exit('606');
       }
 
       // validate phone

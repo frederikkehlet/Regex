@@ -6,7 +6,7 @@ if (isset($_POST['email'])) {
    $sql = "SELECT * FROM users WHERE email='$email';";
    $result = $mysqli->query($sql);
 
-   echo $result->num_rows != 0;
+   echo ($result->num_rows != 0 ? 1 : 0);
 } else {
    header("location: ../index.php");
 }

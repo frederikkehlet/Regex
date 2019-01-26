@@ -66,13 +66,18 @@ $(document).ready(function() {
                method: 'post',
                data: { email: $(this).val() },
                success: function(data) {
-                  if (data) {
+                  if (data == 1) {
+                     console.log(data);
                      SetErrorMessage('.email-error','Email already exists');
                      SetErrorStyles('#email-input');
-                  } else {
+                  } else if (data == 0){
                      SetValidatedStyles($("#email-input"));
                      RemoveErrorMessage('.email-error');
                      checkIfAllInputsAreValidated();
+                  } else {
+                     SetDefaultStyles("#email-input");
+                     RemoveErrorMessage(".email-error");
+                     console.log(data);
                   }
                },
                complete: function(xhr, textStatus) {
@@ -92,7 +97,7 @@ $(document).ready(function() {
          SetDefaultStyles($(this));
          checkIfAllInputsAreValidated();
       } else {
-         if (regex_name.test($(this).val()) === true) {
+         if (regex_name.test($(this).val())) {
             SetValidatedStyles($(this));
             checkIfAllInputsAreValidated();
          } else {
@@ -156,12 +161,14 @@ $(document).ready(function() {
             if (data == '200') {
                console.log("Inserted succesfully");
                // if validation is ok
-               $("#index-form").animate({right:"5%"},250).animate({left:"95%"},500, function() {
+               $("#index-form").animate({right:"5%"}, 250).animate({left:"95%"}, 500, function() {
                   $(this).hide();
                   $(".upload-succesful").html("Upload succesful").fadeIn(1000);
                });
-            } else if (data == '607') {
-               console.log("Wrong or invalid format");
+            } else if (data == '606') {
+               console.log("Email incorrect");
+            } else if (data === '607') {
+               console.log("Phone format incorrect")
             } else if (data == '0') {
                console.log("Empty variables");
             }  else if (data == '-1') {
