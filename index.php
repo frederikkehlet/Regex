@@ -25,7 +25,7 @@
          </div>
       </div>
 
-      <!-- grid container for country, city and postal code -->
+      <!-- grid container for city, postal code and address -->
       <span class="input-section-title">Address</span>
       <hr>
       <div class="container-location">
@@ -41,7 +41,7 @@
          </div>
          <div class="form-group address-field">
             <label for="street-name">Street<span class="input-required">*</span></label>
-            <input class="form-control street-name-input" type="text" name="street-name" required>
+            <input class="form-control address-input" type="text" name="address" required>
          </div>
       </div>
 

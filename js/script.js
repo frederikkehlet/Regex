@@ -22,7 +22,7 @@ $(document).ready(function() {
    $('.cities').change(function() {
       checkPostalCode();
       city = $('.cities option:selected').text();
-      $.get('cities/codes_and_cities.json', function(data) {
+      $.post('cities/codes_and_cities.json', function(data) {
          $('.postal-code-input').attr("value","");
          $.each(data, function(index,value) {
             if (city === data[index]['name']) {
@@ -62,7 +62,7 @@ $(document).ready(function() {
          if (regex_email.test($(this).val())) {
             // db lookup
             $.ajax({
-               url: './database.php',
+               url: './scripts/validate_email.php',
                method: 'post',
                data: { email: $(this).val() },
                success: function(data) {
@@ -74,6 +74,9 @@ $(document).ready(function() {
                      RemoveErrorMessage('.email-error');
                      checkIfAllInputsAreValidated();
                   }
+               },
+               complete: function(xhr, textStatus) {
+                  console.log(xhr.status + ": " + textStatus);
                }
             });
          } else {
@@ -99,7 +102,7 @@ $(document).ready(function() {
       }
    });
 
-   $('.street-name-input').keyup(function() {
+   $('.address-input').keyup(function() {
       if (InputIsEmpty($(this).val())) {
          SetDefaultStyles($(this));
          checkIfAllInputsAreValidated();
@@ -129,18 +132,48 @@ $(document).ready(function() {
    });
 
    function checkIfAllInputsAreValidated() {
-      $('#index-submit').attr("disabled",true);
-      if (AllInputAreValid()) $('#index-submit').attr("disabled",false);
+      if (AllInputAreValid())
+         $('#index-submit').attr("disabled",false);
+      else
+         $('#index-submit').attr("disabled",true);
    }
 
    $("#index-submit").click(function(e) {
       e.preventDefault();
       // ajax call to validate input
-      // TODO HERE
-      // if validation is ok
-      $("#index-form").animate({right:"5%"},250).animate({left:"95%"},500, function() {
-         $(this).hide();
-         $(".upload-succesful").html("Upload succesful").fadeIn(1000);
+      $.post({
+         url: './scripts/insert.php',
+         data: {
+            firstName: $('#first-name').val(),
+            lastName: $('#last-name').val(),
+            city: $('.cities option:selected').text(),
+            postalCode: $('.postal-code-input').val(),
+            address: $('.address-input').val(),
+            email: $('#email-input').val(),
+            phone: $('.phone-input').val()
+         },
+         success: function(data) {
+            if (data == '200') {
+               console.log("Inserted succesfully");
+               // if validation is ok
+               $("#index-form").animate({right:"5%"},250).animate({left:"95%"},500, function() {
+                  $(this).hide();
+                  $(".upload-succesful").html("Upload succesful").fadeIn(1000);
+               });
+            } else if (data == '607') {
+               console.log("Wrong or invalid format");
+            } else if (data == '0') {
+               console.log("Empty variables");
+            }  else if (data == '-1') {
+               console.log("Unset variables");
+            } else {
+               console.log("Error");
+            }
+            // continue when insert.php is done
+         },
+         complete: function(xhr,textStatus) {
+            console.log(xhr.status + ": " + textStatus);
+         }
       });
    });
 });

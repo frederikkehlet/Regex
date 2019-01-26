@@ -7,7 +7,7 @@ function AllInputAreValid() {
       $("#first-name").hasClass("validated") &&
       $("#last-name").hasClass("validated") &&
       $(".postal-code-input").hasClass("validated") &&
-      $('.street-name-input').hasClass("validated") &&
+      $('.address-input').hasClass("validated") &&
       $("#email-input").hasClass("validated")
       && $('.cities option:selected').text() != ""
    );
@@ -19,8 +19,7 @@ function SetDefaultStyles(selector) {
 }
 
 function SetValidatedStyles(selector) {
-   $(selector).css("border","1px solid green")
-   .css("color","green");
+   $(selector).css("border","1px solid green").css("color","green");
    $(selector).addClass("validated");
 }
 
